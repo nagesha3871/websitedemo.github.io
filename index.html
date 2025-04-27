@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nagesha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-black: #000013;
+      --neon-blue: #00f3ff;
+      --star-white: #e6f1ff;
+      --galaxy-purple: #6c63ff;
+      --deep-space: #000428;
+      --highlight-yellow: #2ed2eb;
+      --galaxy-blue: #000013;
+      --new-bg-color: #000013;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: var(--space-black);
+      color: var(--star-white);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--new-bg-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neon-blue);
+      font-size: 1.8rem;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    #typed-text {
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 4px solid var(--neon-blue);
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--deep-space);
+      z-index: 1000;
+      box-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 60%;
+      background: var(--neon-blue);
+    }
+
+    .menu-btn {
+      font-size: 2rem;
+      color: var(--neon-blue);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      background: var(--galaxy-blue);
+      padding: 20px;
+      border: 1px solid var(--neon-blue);
+      border-radius: 10px;
+    }
+
+    .nav-links.active {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: var(--star-white);
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--neon-blue);
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 20px 80px;
+      display: none;
+      background-color: var(--new-bg-color);
+    }
+
+    section.active {
+      display: block;
+    }
+
+    #home {
+      text-align: center;
+    }
+
+    #home h1 {
+      font-weight: bold;
+      font-size: 3rem;
+      color: var(--highlight-yellow);
+    }
+
+    #home p {
+      max-width: 800px;
+      margin: 20px auto;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--star-white);
+    }
+
+    #works {
+      background: var(--galaxy-blue);
+      text-align: center;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 50px;
+      justify-items: center;
+      margin-top: 40px;
+    }
+
+    .work-item {
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease, z-index 0.3s ease;
+      z-index: 1;
+    }
+
+    .work-item.active {
+      transform: scale(1.15);
+      z-index: 10;
+    }
+
+    .work-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-blue);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--deep-space);
+    }
+
+    .work-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .project-info {
+      display: none;
+      margin-top: 15px;
+      max-width: 240px;
+      background: var(--galaxy-blue);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      color: var(--star-white);
+    }
+
+    .project-info h3 {
+      color: var(--neon-blue);
+      margin-bottom: 10px;
+    }
+
+    .work-item.active .project-info {
+      display: block;
+    }
+
+    #about {
+      background: var(--galaxy-blue);
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    #about p {
+      font-size: 1.3rem;
+    }
+
+    #contact {
+      color: var(--star-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      min-height: 100vh;
+      text-align: center;
+      background-image: url('galaxy-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      font-size: 1.4rem;
+    }
+
+    .contact-content {
+      background: rgba(10, 158, 160, 0.8);
+      padding: 60px;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 100%;
+      font-size: 1.3rem;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #hire-me {
+      background: var(--galaxy-blue);
+      font-size: 1.4rem;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    #hire-me h2 {
+      font-size: 2.2rem;
+      color: var(--highlight-yellow);
+      margin-bottom: 20px;
+    }
+
+    #hire-me p {
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+    }
+
+    .topics-heading {
+      font-size: 1.5rem;
+      color: var(--neon-blue);
+      margin-bottom: 20px;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 20px 0 40px;
+      padding: 0 20px;
+    }
+
+    .topic-box {
+      padding: 20px;
+      border: 2px solid var(--neon-blue);
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+    }
+
+    .topic-box.selected::after {
+      content: '✓';
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      color: var(--neon-blue);
+    }
+
+    .hire-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hire-form input,
+    .hire-form textarea {
+      font-size: 1.1rem;
+      padding: 12px;
+    }
+
+    .submit-btn {
+      background: var(--highlight-yellow);
+      color: var(--space-black);
+      padding: 15px 40px;
+      border: none;
+      border-radius: 25px 5px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px;
+      }
+
+      .logo-container h1 {
+        font-size: 2rem;
+      }
+
+      #home h1 {
+        font-size: 2rem;
+      }
+
+      #home p {
+        font-size: 1rem;
+      }
+
+      .contact-content {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-container h1 {
+        font-size: 1.5rem;
+      }
+
+      #home h1 {
+        font-size: 1.8rem;
+      }
+
+      #home p {
+        font-size: 0.9rem;
+      }
+
+      .contact-content {
+        padding: 20px;
+      }
+
+      .submit-btn {
+        padding: 30px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="splash-screen">
+    <div id="typed-text"></div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <div class="logo"><img src="images/logo.jpg" alt="Logo"></div>
+      <h1>Nagesha</h1>
+    </div>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <nav class="nav-links">
+      <a href="#home" onclick="showSection('home'); closeMenu()">Home</a>
+      <a href="#about" onclick="showSection('about'); closeMenu()">About</a>
+      <a href="#works" onclick="showSection('works'); closeMenu()">Works</a>
+      <a href="#contact" onclick="showSection('contact'); closeMenu()">Contact</a>
+      <a href="#hire-me" onclick="showSection('hire-me'); closeMenu()">Hire Me</a>
+    </nav>
+  </header>
+
+  <section id="home" class="active">
+    <h1>🚀🌟 Welcome to My Personal Web Page 🌟🚀</h1>
+    <p>
+      ✨ Hello, I'm <b>Nagesha</b><br>- A passionate developer and problem-solver.<br><br>
+      <b>🌍 Explore my world of technology!</b><br><br>
+      <b>💻 What I Do - Software Development:</b><br>
+      Crafting clean, scalable, and efficient code to build powerful applications.<br><br>
+      <b>🌐 Web & App Development:</b><br>
+      Designing and developing interactive websites and mobile applications.<br><br>
+      <b>🧩 Problem-Solving:</b><br>
+      Tackling real-world problems with logical and creative solutions.<br><br>
+      <b>🚀 Tech Enthusiast:</b><br>
+      Always learning about software, AI, and emerging tech.<br><br>
+      <b>🎯 My Vision:</b><br>
+      🌟 I aim to build impactful solutions and collaborate for a better digital world.
+    </p>
+  </section>
+
+  <section id="works">
+    <h2>My Works</h2>
+    <div class="works-grid">
+      <div class="work-item" onclick="toggleProject(this)">
+        <div class="work-circle">
+          <img src="images/web.jpg" alt="Project 1">
+        </div>
+        <div class="project-info">
+          <h3>Friendly Personal Website</h3>
+          <p>As a BCA student, I’ve developed a user-friendly website with easy navigation.
+            It’s designed for a smooth, interactive experience using open-source software.
+          </p>
+        </div>
+      </div>
+      <div class="work-item" onclick="toggleProject(this)">
+        <div class="work-circle">
+          <img src="images/car.jpg" alt="Project 2">
+        </div>
+        <div class="project-info">
+          <h3>Car Game</h3>
+          <p>As a student, I developed a 2D Car racing game using C#.NET with help from YouTube and GitHub.
+          </p>
+        </div>
+      </div>
+      <div class="work-item" onclick="toggleProject(this)">
+        <div class="work-circle">
+          <img src="images/upcoming.jpg" alt="Project 3">
+        </div>
+        <div class="project-info">
+          <h3>Upcoming</h3>
+          <p>I'm working on innovative projects that blend user-friendly design with cutting-edge open-source tech.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h1>🚀 About</h1>
+    <p>
+      📌 I believe that every challenge is an opportunity to grow.<br><br>
+      💡 Whether I'm coding 💻, brainstorming innovative solutions 🧠, or exploring tech trends 🌍,<br>
+      I approach each day with curiosity 🔍 and enthusiasm 🎉.<br><br>
+      ✨ Join me 🤝 as I explore tech 🖥️ and creativity 🎨.
+    </p>
+  </section>
+
+  <section id="contact">
+    <div class="contact-content">
+      <h1>📬 Contact Me</h1>
+      <button onclick="showEmail()">nagesha3103@gmail.com</button>
+      <p>📍 Chikkaballapur, Karnataka</p>
+      <p class="Error-404">404:Error!</p>
+    </div>
+  </section>
+
+  <section id="hire-me">
+    <h2>Hire Me</h2>
+    <div class="topics-heading">🧠 What are you interested in?</div>
+    <div class="topics-grid">
+      <div class="topic-box" onclick="toggleTopic(this)">C & C++</div>
+      <div class="topic-box" onclick="toggleTopic(this)">Java</div>
+      <div class="topic-box" onclick="toggleTopic(this)">C#.NET</div>
+      <div class="topic-box" onclick="toggleTopic(this)">Python</div>
+      <div class="topic-box" onclick="toggleTopic(this)">Operating System</div>
+      <div class="topic-box" onclick="toggleTopic(this)">AI Solutions</div>
+    </div>
+    <form class="hire-form" onsubmit="submitForm(event)">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" placeholder="Comment" rows="4" required></textarea>
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </section>
+
+  <script>
+    function showEmail() {
+      window.location.href = "mailto:nagesha3103@gmail.com";
+    }
+
+    window.onload = () => {
+      const text = "welcome to my personal web page 🚀🌟....";
+      let i = 0;
+      const typedText = document.getElementById('typed-text');
+      let isTypingComplete = false;
+
+      function type() {
+        if (i < text.length) {
+          typedText.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 100);
+        } else {
+          isTypingComplete = true;
+          setTimeout(() => {
+            if (isTypingComplete) {
+              document.getElementById('splash-screen').style.display = 'none';
+              document.getElementById('home').classList.add('active');
+            }
+          }, 3000);
+        }
+      }
+
+      type();
+    };
+
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    }
+
+    function closeMenu() {
+      document.querySelector('.nav-links').classList.remove('active');
+    }
+
+    function showSection(id) {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    let lastClickedProject = null;
+    function toggleProject(item) {
+      if (lastClickedProject && lastClickedProject !== item) {
+        lastClickedProject.classList.remove('active');
+      }
+      item.classList.toggle('active');
+      lastClickedProject = item.classList.contains('active') ? item : null;
+    }
+
+    function toggleTopic(topic) {
+      topic.classList.toggle('selected');
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert('Form submitted! Thank you.');
+    }
+  </script>
+</body>
+</html>
